@@ -15,9 +15,10 @@ namespace Mission7.Pages
         private IMission7Repository repo { get; set; }
 
         //Constructor for BasketModel --> Builds the instance of the database for you
-        public BasketModel (IMission7Repository temp)
+        public BasketModel (IMission7Repository temp, Basket b)
         {
             repo = temp;
+            basket = b;
         }
         
         public Basket basket { get; set; }
@@ -25,7 +26,6 @@ namespace Mission7.Pages
         public void OnGet(string returnUrl)
         {
             ReturnUrl = returnUrl ?? "/";
-            basket = HttpContext.Session.GetJson<Basket>("basket") ?? new Basket();
         }
 
         public IActionResult OnPost(int BookId, string returnUrl)
@@ -34,10 +34,14 @@ namespace Mission7.Pages
             Books b = repo.Books.FirstOrDefault(x => x.BookId == BookId);
 
             //Once we have the project id we can add it to our basket
-            basket = HttpContext.Session.GetJson<Basket>("basket") ?? new Basket();
             basket.AddItem(b, 1);
 
-            HttpContext.Session.SetJson("basket", basket);
+            return RedirectToPage(new { ReturnUrl = returnUrl });
+        }
+
+        public IActionResult OnPostRemove(int bookId, string returnUrl)
+        {
+            basket.RemoveItem(basket.Items.First(x => x.Book.BookId == bookId).Book);
 
             return RedirectToPage(new { ReturnUrl = returnUrl });
         }
