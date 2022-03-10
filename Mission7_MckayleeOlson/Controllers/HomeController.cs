@@ -21,7 +21,7 @@ namespace Mission7.Controllers
         //public HomeController(BookstoreContext temp) => context = temp;
 
 
-        public IActionResult Index(int pageNum = 1)
+        public IActionResult Index(string bookCategory, int pageNum = 1)
         {
             int pageSize = 10;
 
@@ -29,13 +29,16 @@ namespace Mission7.Controllers
             {
                 Books = repo.Books
                 .OrderBy(b => b.Title)
+                .Where(b => b.Category == bookCategory || bookCategory == null)
                 .Skip((pageNum - 1) * pageSize)
                 .Take(pageSize),
 
                 PageInfo = new PageInfo
                 {
-                    TotalNumProjects = repo.Books.Count(),
-                    ProjectsPerPage = pageSize,
+                    TotalNumBooks = (bookCategory == null
+                        ? repo.Books.Count()
+                        : repo.Books.Where(x => x.Category == bookCategory).Count()),
+                    BooksPerPage = pageSize,
                     CurrentPage = pageNum
                 }
             };

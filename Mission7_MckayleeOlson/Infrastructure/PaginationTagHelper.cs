@@ -30,6 +30,10 @@ namespace Mission7.Infrastructure
         //This is for the for loop --> Different that the View Context
         public PageInfo PageBlah { get; set; } //Tag Helper
         public string PageAction { get; set; } //Tag Helper --> help to figure out the page we are on
+        public string PageClass { get; set; }
+        public bool PageClassEnabled { get; set; }
+        public string PageClassNormal { get; set; }
+        public string PageClassSelected { get; set; }
 
         //Over ride method that is in the TagHelper class
         public override void Process(TagHelperContext thc, TagHelperOutput tho)
@@ -44,6 +48,12 @@ namespace Mission7.Infrastructure
                 TagBuilder tb = new TagBuilder("a");
 
                 tb.Attributes["href"] = uh.Action(PageAction, new { pageNum = i });
+                if (PageClassEnabled)
+                {
+                    tb.AddCssClass(PageClass);
+                    tb.AddCssClass(i == PageBlah.CurrentPage ? PageClassSelected : PageClassNormal);
+                }
+                tb.AddCssClass(PageClass);
                 tb.InnerHtml.Append(i.ToString());
 
                 final.InnerHtml.AppendHtml(tb);

@@ -1,0 +1,16 @@
+﻿@{
+}
+@model IEnumerable<string>
+
+<!--Now we want to build out the view here-->
+<div class="d-grid gap-2">
+    <a asp-controller="Home" asp-action="Index" asp-route-bookCategory="" class="btn btn-outline-secondary">Home</a>
+
+    <!--In this loop it will take the string in the list of strings and print it out as the project name of the tag-->
+    @foreach (string t in Model)
+    {
+        <a asp-controller="Home" asp-action="Index" asp-route-bookCategory="@t" asp-route-pageNum="1"
+           class="btn @(ViewBag.SelectedType == t ? "btn-primary" : "btn-outline-secondary")">@t</a>
+           <!--Above is a shorthand IF statement to determine if the selected button is lit up or not-->
+    }
+</div>

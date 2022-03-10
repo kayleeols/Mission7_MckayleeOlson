@@ -2,17 +2,8 @@
 
  @foreach (Books b in Model.Books)
   {
-     <h3>@b.Title</h3>
-
-     <ul>
-         <li>Author: @b.Author</li>
-         <li>Publisher: @b.Publisher</li>
-         <li>ISBN: @b.Isbn</li>
-         <li>Classification/Category: @b.Classification</li>
-         <li>Number of Pages: @b.PageCount</li>
-         <li>Price: @b.Price</li>
-     </ul>
+     <partial name="Book Summary" model="b"/>
    }
 
-<div page-blah="@Model.PageInfo" page-action="Index"></div>x
+<div page-blah="@Model.PageInfo" page-action="Index" page-class="btn"></div>
 
