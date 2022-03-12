@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -49,6 +50,7 @@ namespace Mission7.Models
 
     public class BasketLineItem
     {
+        [Key]
         public int LineID { get; set; }
         public Books Book { get; set; } //Instance of a Book named Book
         public int Quantity { get; set; } //How many of these books they want to add to their cart/basket

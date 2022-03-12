@@ -20,6 +20,7 @@ namespace Mission7.Models
         }
 
         public DbSet<Books> Books { get; set; }
+        public DbSet<InfoDonate> Info { get; set; }
 
         //Don't need the below code
 
